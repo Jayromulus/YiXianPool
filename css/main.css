@@ -1,6 +1,29 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: darkslateblue;
+  color: white;
+  overflow: hidden;
+}
+
+.character {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.character img {
+  width: 5.5%;
+}
+
+.side-job {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.side-job img {
+  height: 50px;
 }
 
 .sect, .job {
@@ -37,9 +60,33 @@ body {
 
 .pool-display {
   padding: 0 5px;
+  width: 100%;
+  display: flex;
+  align-content: last baseline;
 }
 
-.pool-total {
+.pool-total, .current-pool {
   width: 10%;
   text-align: center;
+}
+
+.phase-control {
+  width: 80%;
+  text-align: center;
+}
+
+.pool-total, .phase-control, .current-pool {
+  display: inline;
+}
+
+.inline {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.meditation, .foundation, .virtuoso, .immortality, .incarnation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
