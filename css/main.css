@@ -1,0 +1,45 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.sect, .job {
+  width: 50%;
+  display: inline;
+}
+
+.sect {
+  padding-left: 5px;
+  display: flex;
+  justify-content: start;
+}
+
+.job {
+  padding-right: 5px;
+  justify-content: end;
+  display: flex;
+}
+
+.display {
+  width: 100%;
+  display: flex;
+  align-content:last baseline;
+}
+
+.selection {
+  padding: 5px;
+}
+
+.character-name {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.pool-display {
+  padding: 0 5px;
+}
+
+.pool-total {
+  width: 10%;
+  text-align: center;
+}
