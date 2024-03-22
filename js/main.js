@@ -1,24 +1,36 @@
-const charButtonsDisplay = document.querySelector('.character');
-const jobButtonsDisplay = document.querySelector('.side-job');
-const sectDisplay = document.querySelector('.sect');
-const sideJobDisplay = document.querySelector('.job');
-const characterDisplay = document.querySelector('.character-name');
-const poolTotalDisplay = document.querySelector('.pool-total');
-const currentPoolDisplay = document.querySelector('.current-pool');
-const phaseDisplay = document.querySelector('.phase-control');
+const charButtonsDisplay = document.querySelector(".character");
+const jobButtonsDisplay = document.querySelector(".side-job");
+const sectDisplay = document.querySelector(".sect");
+const sideJobDisplay = document.querySelector(".job");
+const characterDisplay = document.querySelector(".character-name");
+const poolTotalDisplay = document.querySelector(".pool-total");
+const currentPoolDisplay = document.querySelector(".current-pool");
+const phaseDisplay = document.querySelector(".phase-control");
 
-const phaseList = ['Meditation', 'Foundation', 'Virtuoso', 'Immortality', 'Incarnation'];
+const meditation = document.querySelector(".meditation");
+const foundation = document.querySelector(".foundation");
+const virtuoso = document.querySelector(".virtuoso");
+const immortality = document.querySelector(".immortality");
+const incarnation = document.querySelector(".incarnation");
 
-let currentSect = '';
-let currentJob = '';
+const phaseList = [
+  "Meditation",
+  "Foundation",
+  "Virtuoso",
+  "Immortality",
+  "Incarnation",
+];
+
+let currentSect = "";
+let currentJob = "";
 let currentPhase = 0;
 
-characterList.forEach((char, i) => { 
-  const btn = document.createElement('img');
+characterList.forEach((char, i) => {
+  const btn = document.createElement("img");
   btn.src = images[char.name];
   btn.key = i;
 
-  btn.addEventListener('click', () => {
+  btn.addEventListener("click", () => {
     currentSect = char.sect;
     sectDisplay.innerText = char.sect;
     characterDisplay.innerText = char.name;
@@ -29,15 +41,15 @@ characterList.forEach((char, i) => {
 });
 
 sideJobList.forEach((job, i) => {
-  const btn = document.createElement('img');
+  const btn = document.createElement("img");
   btn.src = images[job];
   btn.key = i;
 
-  btn.addEventListener('click', () => {
+  btn.addEventListener("click", () => {
     currentJob = job;
     sideJobDisplay.innerText = job;
     renderCardPoolControl(currentSect, currentJob);
-  })
+  });
 
   jobButtonsDisplay.appendChild(btn);
 });
@@ -58,25 +70,25 @@ function findPoolTotal(sectName, jobName) {
 
 function findCards(search) {
   switch (search) {
-    case 'Cloud Sword Sect':
+    case "Cloud Sword Sect":
       return cloudSword;
-    case 'Hepstar Pavillion':
+    case "Hepstar Pavillion":
       return hepstarPavillion;
-    case 'Five Elements Alliance':
+    case "Five Elements Alliance":
       return fiveElements;
-    case 'Duan Xuan Sect':
+    case "Duan Xuan Sect":
       return duanXuan;
-    case 'Elixirist':
+    case "Elixirist":
       return elixirist;
-    case 'Fuluist':
+    case "Fuluist":
       return fuluist;
-    case 'Painter':
+    case "Painter":
       return painter;
-    case 'Musician':
+    case "Musician":
       return musician;
-    case 'Formation Master':
+    case "Formation Master":
       return formationMaster;
-    case 'Plant Master':
+    case "Plant Master":
       return plantMaster;
     default:
       break;
@@ -84,30 +96,30 @@ function findCards(search) {
 }
 
 function renderCardPoolControl(char, job) {
-  if(char && job) {
+  if (char && job) {
     let pool = findPoolTotal(char, job);
 
     poolTotalDisplay.innerText = pool[1];
     currentPoolDisplay.innerText = pool[0];
 
-    const phase = document.createElement('h2');
+    const phase = document.createElement("h2");
     phase.innerText = phaseList[currentPhase];
 
-    const reset = document.createElement('button');
-    const increment = document.createElement('button');
+    const reset = document.createElement("button");
+    const increment = document.createElement("button");
 
-    reset.innerText = 'Reset';
-    increment.innerText = 'Breakthrough';
+    reset.innerText = "Reset";
+    increment.innerText = "Breakthrough";
 
-    reset.addEventListener('click', () => resetPhase(phase));
+    reset.addEventListener("click", () => resetPhase(phase));
 
-    increment.addEventListener('click', () => incrementPhase(phase));
+    increment.addEventListener("click", () => incrementPhase(phase));
 
-    reset.classList.add('inline');
-    phase.classList.add('inline');
-    increment.classList.add('inline');
+    reset.classList.add("inline");
+    phase.classList.add("inline");
+    increment.classList.add("inline");
 
-    phaseDisplay.innerHTML = '';
+    phaseDisplay.innerHTML = "";
     phaseDisplay.appendChild(reset);
     phaseDisplay.appendChild(phase);
     phaseDisplay.appendChild(increment);
@@ -116,25 +128,100 @@ function renderCardPoolControl(char, job) {
   }
 }
 
-function renderCardPool() {
+function splitCardPool() {
+  const cardsByPool = [];
   const cards = findCurrentPoolList();
+
   currentPool = cards.reduce((a, b) => a + b.current, 0);
 
-  console.log({ cards });
+  if (currentPhase >= 0) {
+    cardsByPool.push(cards.filter((card) => card.phase === 1));
+  }
+
+  if (currentPhase >= 1) {
+    cardsByPool.push(cards.filter((card) => card.phase === 2));
+  }
+
+  if (currentPhase >= 2) {
+    cardsByPool.push(cards.filter((card) => card.phase === 3));
+  }
+
+  if (currentPhase >= 3) {
+    cardsByPool.push(cards.filter((card) => card.phase === 4));
+  }
+
+  if (currentPhase >= 4) {
+    cardsByPool.push(cards.filter((card) => card.phase === 5));
+  }
+
+  console.log({ cardsByPool });
 
   currentPoolDisplay.innerText = currentPool;
 
-  // reduce each phase on it's own, find each phase on it's own, render each phase individually
+  return cardsByPool;
+}
+
+function renderCardPool() {
+  meditation.innerHTML = "";
+  foundation.innerHTML = "";
+  virtuoso.innerHTML = "";
+  immortality.innerHTML = "";
+  incarnation.innerHTML = "";
+
+  const cards = splitCardPool();
+
+  cards.forEach((phase, index) => {
+    let currentParent;
+    console.log({ index });
+
+    switch (index) {
+      case 0:
+        currentParent = meditation;
+        break;
+      case 1:
+        currentParent = foundation;
+        break;
+      case 2:
+        currentParent = virtuoso;
+        break;
+      case 3:
+        currentParent = immortality;
+        break;
+      case 4:
+        currentParent = incarnation;
+        break;
+      default:
+        break;
+    }
+    cards[index].forEach((card) => {
+      const container = document.createElement("h3");
+      container.classList.add("counter-display");
+      container.innerText = `${card.name} x${card.current}`;
+
+      container.addEventListener('click', () => {
+        card.current--;
+        renderCardPool();
+      });
+
+      currentParent.appendChild(container);
+    });
+  });
 }
 
 function resetPhase(el) {
+  resetPool();
   currentPhase = 0;
   el.innerText = phaseList[currentPhase];
   renderCardPool();
 }
 
+function resetPool() {
+  // go through each phase of the cards and reset the values, exceptions for count are talent elixir, great bodybuilding, and enlightenment elixir
+  
+}
+
 function incrementPhase(el) {
-  currentPhase < 4 ? currentPhase += 1 : currentPhase = 4;
+  currentPhase < 4 ? (currentPhase += 1) : (currentPhase = 4);
   el.innerText = phaseList[currentPhase];
   renderCardPool();
 }
@@ -143,5 +230,5 @@ function findCurrentPoolList() {
   const sectCardList = findCards(currentSect);
   const jobCardList = findCards(currentJob);
   const cards = [...sectCardList, ...jobCardList];
-  return cards.filter(card => card.phase <= currentPhase + 1);
+  return cards.filter((card) => card.phase <= currentPhase + 1);
 }
