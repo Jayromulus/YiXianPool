@@ -4,6 +4,7 @@ body {
   background-color: darkslateblue;
   color: white;
   overflow-x: hidden;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .character {
@@ -33,13 +34,13 @@ body {
 }
 
 .sect {
-  padding-left: 5px;
+  padding-left: 15px;
   display: flex;
   justify-content: start;
 }
 
 .job {
-  padding-right: 5px;
+  padding-right: 15px;
   justify-content: end;
   display: flex;
 }
@@ -60,19 +61,19 @@ body {
 }
 
 .pool-display {
-  padding: 0 5px;
+  /* padding: 0 5px; */
   width: 100%;
   display: flex;
   align-content: last baseline;
 }
 
 .pool-total, .current-pool {
-  width: 10%;
+  width: 15%;
   text-align: center;
 }
 
 .phase-control {
-  width: 80%;
+  width: 70%;
   text-align: center;
 }
 
@@ -95,4 +96,9 @@ body {
 .counter-display {
   width: 20%;
   text-align: center;
+  min-width: 150px;
+}
+
+.card-image {
+  width: 90%;
 }

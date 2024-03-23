@@ -154,8 +154,6 @@ function splitCardPool() {
     cardsByPool.push(cards.filter((card) => card.phase === 5));
   }
 
-  console.log({ cardsByPool });
-
   currentPoolDisplay.innerText = currentPool;
 
   return cardsByPool;
@@ -172,7 +170,6 @@ function renderCardPool() {
 
   cards.forEach((phase, index) => {
     let currentParent;
-    console.log({ index });
 
     switch (index) {
       case 0:
@@ -193,16 +190,31 @@ function renderCardPool() {
       default:
         break;
     }
-    cards[index].forEach((card) => {
-      const container = document.createElement("h3");
+
+    phase.forEach((card) => {
+      const container = document.createElement("div");
+      const image = document.createElement('img');
+      const text = document.createElement('p');
+
       container.classList.add("counter-display");
-      container.innerText = `${card.name} x${card.current}`;
+      text.innerText = `${card.name} x${card.current}`;
+
+      image.src = '../assets/example-card.png';
+      image.classList.add('card-image');
 
       container.addEventListener('click', () => {
-        card.current--;
+        card.current > 0 ? card.current-- : card.current;
         renderCardPool();
       });
 
+      container.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        card.current > 1 ? card.current -= 2 : card.current = 0;
+        renderCardPool();
+      })
+
+      container.appendChild(image);
+      container.appendChild(text);
       currentParent.appendChild(container);
     });
   });
@@ -217,7 +229,15 @@ function resetPhase(el) {
 
 function resetPool() {
   // go through each phase of the cards and reset the values, exceptions for count are talent elixir, great bodybuilding, and enlightenment elixir
-  
+  const cards = splitCardPool();
+
+  console.log({ cards });
+
+  cards.forEach(phase => {
+    phase.forEach(card => {
+      card.current = card.max;
+    })
+  })
 }
 
 function incrementPhase(el) {
