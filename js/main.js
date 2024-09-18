@@ -3,8 +3,8 @@ const jobButtonsDisplay = document.querySelector(".side-job");
 const sectDisplay = document.querySelector(".sect");
 const sideJobDisplay = document.querySelector(".job");
 const characterDisplay = document.querySelector(".character-name");
-const poolTotalDisplay = document.querySelector(".pool-total");
-const currentPoolDisplay = document.querySelector(".current-pool");
+// const poolTotalDisplay = document.querySelector(".pool-total");
+// const currentPoolDisplay = document.querySelector(".current-pool");
 const phaseDisplay = document.querySelector(".phase-control");
 
 const meditation = document.querySelector(".meditation");
@@ -28,12 +28,16 @@ let currentPhase = 0;
 characterList.forEach((char, i) => {
   const btn = document.createElement("img");
   btn.src = images[char.name];
+  btn.id = char.name;
   btn.key = i;
 
   btn.addEventListener("click", () => {
     currentSect = char.sect;
     sectDisplay.innerText = char.sect;
     characterDisplay.innerText = char.name;
+    // ! remove this and instead hold current character, when running this code run another function which searchs for current character, removes class from all others and then selects current with the border image
+    // let target = document.getElementById(char.name)
+    // target.classList.add('selected-character');
     renderCardPoolControl(currentSect, currentJob);
   });
 
@@ -90,6 +94,8 @@ function findCards(search) {
       return formationMaster;
     case "Plant Master":
       return plantMaster;
+    case "Fortune Teller":
+      return fortuneTeller;
     default:
       break;
   }
@@ -99,8 +105,8 @@ function renderCardPoolControl(char, job) {
   if (char && job) {
     let pool = findPoolTotal(char, job);
 
-    poolTotalDisplay.innerText = pool[1];
-    currentPoolDisplay.innerText = pool[0];
+    // poolTotalDisplay.innerText = pool[1];
+    // currentPoolDisplay.innerText = pool[0];
 
     const phase = document.createElement("h2");
     phase.innerText = phaseList[currentPhase];
@@ -154,12 +160,12 @@ function splitCardPool() {
     cardsByPool.push(cards.filter((card) => card.phase === 5));
   }
 
-  currentPoolDisplay.innerText = currentPool;
+  // currentPoolDisplay.innerText = currentPool;
 
   return cardsByPool;
 }
 
-function renderCardPool() {
+function renderCardPoolImages() {
   meditation.innerHTML = "";
   foundation.innerHTML = "";
   virtuoso.innerHTML = "";
@@ -193,28 +199,102 @@ function renderCardPool() {
 
     phase.forEach((card) => {
       const container = document.createElement("div");
-      const image = document.createElement('img');
-      const text = document.createElement('p');
+      const image = document.createElement("img");
+      const text = document.createElement("p");
 
       container.classList.add("counter-display");
       text.innerText = `${card.name} x${card.current}`;
 
-      image.src = '../assets/example-card.png';
-      image.classList.add('card-image');
+      image.src = "../assets/cards/cloud sword/touch sky - english.png";
+      image.classList.add("card-image");
 
-      container.addEventListener('click', () => {
+      container.addEventListener("click", () => {
         card.current > 0 ? card.current-- : card.current;
         renderCardPool();
       });
 
-      container.addEventListener('contextmenu', (e) => {
+      container.addEventListener("contextmenu", (e) => {
         e.preventDefault();
-        card.current > 1 ? card.current -= 2 : card.current = 0;
+        card.current > 1 ? (card.current -= 2) : (card.current = 0);
         renderCardPool();
-      })
+      });
 
       container.appendChild(image);
       container.appendChild(text);
+      currentParent.appendChild(container);
+    });
+  });
+}
+
+function renderCardPool() {
+  meditation.innerHTML = "";
+  foundation.innerHTML = "";
+  virtuoso.innerHTML = "";
+  immortality.innerHTML = "";
+  incarnation.innerHTML = "";
+
+  const cards = splitCardPool();
+
+  cards.forEach((phase, index) => {
+    switch (index) {
+      case 0:
+        currentParent = meditation;
+        break;
+      case 1:
+        currentParent = foundation;
+        break;
+      case 2:
+        currentParent = virtuoso;
+        break;
+      case 3:
+        currentParent = immortality;
+        break;
+      case 4:
+        currentParent = incarnation;
+        break;
+      default:
+        break;
+    }
+
+    phase.forEach((card) => {
+      const container = document.createElement("div");
+      const cardName = document.createElement("h2");
+      const amount = document.createElement("h3");
+      const absorb = document.createElement("button");
+      const exchange = document.createElement("button");
+      const subContainer = document.createElement("div");
+
+      // container.classList.add("counter-display");
+      container.classList.add("card-primary");
+      subContainer.classList.add("subsection");
+
+      cardName.innerText = card.name;
+      amount.innerText = card.current;
+      absorb.innerText = "Absorb";
+      exchange.innerText = "Exchange";
+
+      amount.style.display = "inline";
+      absorb.style.display = "inline";
+      exchange.style.display = "inline";
+
+      absorb.addEventListener("click", () => {
+        card.current > 0 ? card.current-- : card.current;
+        renderCardPool();
+      });
+
+      exchange.addEventListener("click", () => {
+        card.current > 1 ? (card.current -= 2) : (card.current = 0);
+        renderCardPool();
+      });
+
+      container.appendChild(cardName);
+
+      subContainer.appendChild(absorb);
+      subContainer.appendChild(amount);
+      subContainer.appendChild(exchange);
+
+      container.appendChild(subContainer);
+
       currentParent.appendChild(container);
     });
   });
@@ -233,11 +313,11 @@ function resetPool() {
 
   console.log({ cards });
 
-  cards.forEach(phase => {
-    phase.forEach(card => {
+  cards.forEach((phase) => {
+    phase.forEach((card) => {
       card.current = card.max;
-    })
-  })
+    });
+  });
 }
 
 function incrementPhase(el) {

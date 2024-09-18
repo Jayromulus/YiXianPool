@@ -37,12 +37,14 @@ body {
   padding-left: 15px;
   display: flex;
   justify-content: start;
+  text-align: left;
 }
 
 .job {
   padding-right: 15px;
   justify-content: end;
   display: flex;
+  text-align: right;
 }
 
 .display {
@@ -73,8 +75,9 @@ body {
 }
 
 .phase-control {
-  width: 70%;
+  width: 100%;
   text-align: center;
+  /* grid-template-columns: auto auto auto; */
 }
 
 .pool-total, .phase-control, .current-pool {
@@ -94,11 +97,43 @@ body {
 }
 
 .counter-display {
-  width: 20%;
+  width: 6%;
   text-align: center;
-  min-width: 150px;
+  min-width: 80px;
 }
 
 .card-image {
-  width: 90%;
+  width: 100%;
+}
+
+.card-primary {
+  /* width: 19%; */
+  width: 14%;
+  background-color: rgb(141, 133, 194);
+  border-radius: 5px;
+  padding: 1rem;
+  padding-top: 0;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.subsection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.selected-character {
+  border-image: url('../assets/selected-border.png');
+}
+
+@media only screen and (max-width: 800px) {
+  .card-primary {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  .card-primary {
+    width: 30%;
+  }
 }

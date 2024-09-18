@@ -67,4 +67,12 @@ const characterList = [
     name: "Tu Kui",
     sect: "Duan Xuan Sect"
   },
+  {
+    name: "Ye Mingming",
+    sect: "Duan Xuan Sect"
+  },
+  {
+    name: "Ji Fangsheng",
+    sect: "Duan Xuan Sect"
+  }
 ]
