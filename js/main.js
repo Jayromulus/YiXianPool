@@ -269,7 +269,7 @@ function renderCardPool() {
       subContainer.classList.add("subsection");
 
       cardName.innerText = card.name;
-      amount.innerText = card.current;
+      amount.innerText = `x ${card.current}`;
       absorb.innerText = "Absorb";
       exchange.innerText = "Exchange";
 
@@ -286,11 +286,15 @@ function renderCardPool() {
         card.current > 1 ? (card.current -= 2) : (card.current = 0);
         renderCardPool();
       });
+      
+      cardName.style.marginBottom = 0;
+      amount.style.padding = '0 0 15px 0';
 
       container.appendChild(cardName);
+      container.appendChild(amount);
 
+      // subContainer.appendChild(amount);
       subContainer.appendChild(absorb);
-      subContainer.appendChild(amount);
       subContainer.appendChild(exchange);
 
       container.appendChild(subContainer);
