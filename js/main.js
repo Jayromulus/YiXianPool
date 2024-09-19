@@ -270,7 +270,7 @@ function renderCardPool() {
 
       cardName.innerText = card.name;
       amount.innerText = `x ${card.current}`;
-      absorb.innerText = "Absorb";
+      absorb.innerText = "Draw Card";
       exchange.innerText = "Exchange";
 
       amount.style.display = "inline";
