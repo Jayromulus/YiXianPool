@@ -33,8 +33,8 @@ characterList.forEach((char, i) => {
 
   btn.addEventListener("click", () => {
     currentSect = char.sect;
-    // sectDisplay.innerText = char.sect;
-    // characterDisplay.innerText = char.name;
+    sectDisplay.innerText = char.sect;
+    characterDisplay.innerText = char.name;
     // ! remove this and instead hold current character, when running this code run another function which searchs for current character, removes class from all others and then selects current with the border image
     // let target = document.getElementById(char.name)
     // target.classList.add('selected-character');
@@ -51,7 +51,7 @@ sideJobList.forEach((job, i) => {
 
   btn.addEventListener("click", () => {
     currentJob = job;
-    // sideJobDisplay.innerText = job;
+    sideJobDisplay.innerText = job;
     renderCardPoolControl(currentSect, currentJob);
   });
 
