@@ -259,7 +259,7 @@ const cloudSword = [
     "max": 8
   },
   {
-    "name": "CentiBirt Spirit Sword Rhythm",
+    "name": "CentiBird Spirit Sword Rhythm",
     "sect": "Cloud Sword Sect",
     "phase": 4,
     "current": 8,
@@ -273,7 +273,7 @@ const cloudSword = [
     "max": 8
   },
   {
-    "name": "Gian Kun Spirit Sword",
+    "name": "Giant Kun Spirit Sword",
     "sect": "Cloud Sword Sect",
     "phase": 4,
     "current": 8,
